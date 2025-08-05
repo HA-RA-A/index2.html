@@ -96,15 +96,29 @@
      * @param {boolean} isLoading - ロード中かどうか
      */
     function setButtonLoading(button, isLoading) {
-      const buttonId = button.id.split('-')[1];
-      if (isLoading) {
-        button.disabled = true;
-        button.style.opacity = '0.7';
-        button.textContent = '取得中...';
+      // 送信ボタンの場合は、テキストを「スプレッドシートへ送信」に戻す
+      if (button.id === 'send-data-btn') {
+        if (isLoading) {
+          button.disabled = true;
+          button.style.opacity = '0.7';
+          button.textContent = '送信中...';
+        } else {
+          button.disabled = false;
+          button.style.opacity = '1';
+          button.textContent = 'スプレッドシートへ送信';
+        }
       } else {
-        button.disabled = false;
-        button.style.opacity = '1';
-        button.textContent = `場所${buttonId}`;
+        // 場所ボタンの場合は、元のロジックを維持
+        const buttonId = button.id.split('-')[1];
+        if (isLoading) {
+          button.disabled = true;
+          button.style.opacity = '0.7';
+          button.textContent = '取得中...';
+        } else {
+          button.disabled = false;
+          button.style.opacity = '1';
+          button.textContent = `場所${buttonId}`;
+        }
       }
     }
 
